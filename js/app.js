@@ -23,6 +23,28 @@ if (numUser > numCpu){
     message = 'Hai pareggiato contro il computer, con i dadi avete fatto ' + result;
 }
 
-//stampiamo il risultato a video sull'html
-document.getElementById('result').innerHTML = 'Il dado più alto è: ' + result;
-document.getElementById('message').innerHTML = message;
+//Element dom
+eleMessage = document.getElementById('message');
+eleCubo = document.getElementById('cubo');
+
+//rotazione del cubo
+var gradi = 0;
+var animation = setInterval(e => {
+    //gradi += 1;
+    gradi = Math.floor(Math.random() * 360);
+    eleCubo.style.transform = `rotateX(${gradi}deg) rotateY(${gradi}deg)`;
+    eleMessage.innerHTML = 'Attendere mentre il sistema elabora la richiesta...';
+},100);
+
+//Impostiamo il tempo di attesa per l'elaborazione
+setTimeout(e => {
+    clearInterval(animation);
+    //stampiamo il risultato a tutte le faccie del cubo
+    for(var i = 0; i < eleCubo.children.length; i++){
+        eleCubo.children[i].innerHTML = result;
+        //console.log(eleCubo.children.length);
+    }
+
+    //restituiamo il messaggio del risultato
+    eleMessage.innerHTML = message;
+},5000);
